@@ -1,36 +1,24 @@
 #include <cstdio>
 
-
-int main() {
-    long long int a,b,c;
-    scanf("%lld %lld %lld", &a, &b, &c);
-    printf("1 : %lld\n", a);
-    for(int i=0; i<b; i++) {
-        if(a>c) a %= c;
-        else a *= a;
+long long mod;
+long long multiple_dv(long long a, long long expo) {
+    long long temp_ans;
+    if(expo==1) return a%mod;
+    else if(expo==0) return 1;
+    else {
+        if(expo%2 == 0) { // 짝수
+            temp_ans = multiple_dv(a, expo/2);
+            return (temp_ans*temp_ans)%mod;
+        }
+        else { // 홀수
+            temp_ans = multiple_dv(a, (expo-1)/2);
+            return ((temp_ans*temp_ans)%mod*a)%mod;
+        }
     }
-    printf("2 : %lld\n", a);
-    if(a>c) a %= c;
-    printf("3 : %lld\n", a);
-    return 0;
 }
 
-
-/*
-(10 10 10 10 10 10)%4
-
-10**6 => 10**3 10**3 => 10**2 * 10 * 10**2 * 10 => 10 10 10 10 10 10
-
-
-7 3 5
-7 7 7 => 
-2 2 2 => 8
-3 
-
-7 3 9
-7 7 7 
-49%9 = 4
-7*4 = 28 = 1
-
-
-*/
+int main() {
+    long long a,b;
+    scanf("%lld %lld %lld", &a, &b, &mod);
+    printf("%lld\n", multiple_dv(a,b));
+}
