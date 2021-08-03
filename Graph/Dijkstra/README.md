@@ -18,9 +18,11 @@
 
 ```python
 import math
+
 visited = set()
-dp = [math.inf for _ in range(n)]
-dp[start] = 0
+dp = [math.inf for _ in range(n+1)]
+dp[1] = 0
+
 while True:
     # 최단거리 찾기
     val = math.inf
@@ -29,15 +31,17 @@ while True:
         if dp[vertex] < val and not vertex in visited:
             val = dp[vertex]
             cur = vertex
-    
     # 최단거리를 찾지 못했다면 나온다.
     if val == math.inf:
         break
+    visited.add(cur)
     # 최단거리를 찾았다면
     for w,v in graph[cur]:
         weight = w + dp[cur]
         if weight < dp[v] and not v in visited:
             dp[v] = weight
+            
+print(dp)
 ```
 
 시간복잡도 O(ElogN)인 경우이다.
